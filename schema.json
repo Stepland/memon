@@ -1,0 +1,98 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "memon",
+    "description": "A jubeat chart set description format based on json",
+    "type": "object",
+    "properties": {
+        "version": {
+            "description": "The version string for the schema format",
+            "type": "string"
+        },
+        "metadata": {
+            "description": "Contains information that applies to the whole set of charts",
+            "type": "object",
+            "properties": {
+                "song title": {
+                    "description": "The title of the song",
+                    "type": "string"
+                },
+                "artist": {
+                    "description": "The song artist",
+                    "type": "string"
+                },
+                "music path": {
+                    "description": "Path to the music file, relative to the memon file",
+                    "type": "string"
+                },
+                "album cover path": {
+                    "description": "Path to the album cover, relative to the memon file",
+                    "type": "string"
+                },
+                "BPM": {
+                    "description": "Song tempo in Beats per Minute",
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                },
+                "offset": {
+                    "description": "In seconds, opposite of the time position of the first beat in the music file",
+                    "type": "number"
+                }
+            },
+            "required": ["song title","artist","music path","album cover path","BPM","offset"]
+        },
+        "data": {
+            "description": "Charts with difficulty names used as keys",
+            "type": "object",
+            "additionalProperties": {
+                "description": "A chart",
+                "type": "object",
+                "properties": {
+                    "level": {
+                        "description": "Level rating of the chart, typically goes from 0 to 10 in jubeat",
+                        "type": "integer"
+                    },
+                    "resolution": {
+                        "description": "Tempo resolution, number of \"ticks\" in a beat",
+                        "type": "integer",
+                        "exclusiveMinimum": 0
+                    },
+                    "notes": {
+                        "description": "The array of notes",
+                        "type": "array",
+                        "items": {
+                            "description": "A single note",
+                            "type": "object",
+                            "properties": {
+                                "n": {
+                                    "description": "Position, left to right, top to bottom",
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 15
+                                },
+                                "t": {
+                                    "description": "Timing, measured in \"ticks\" as specified with the resolution",
+                                    "type":"integer",
+                                    "minimum": 0
+                                },
+                                "l": {
+                                    "description": "Lenght in ticks, 0 if not a long note",
+                                    "type": "integer",
+                                    "minimum": 0
+                                },
+                                "p": {
+                                    "description": "Tail starting position, relative to note position, counting from 0 to 11 clockwise and expanding out starting one square above the note",
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 11
+                                }
+                            },
+                            "required": ["n","t","l","p"]
+                        }
+                    }
+                },
+                "required": ["level","resolution","notes"]
+            }
+        }
+    },
+    "required": ["version","metadata","data"]
+}
