@@ -1,7 +1,7 @@
 # `.memon`
 *memo + json*
 
-.memon is a new json-based jubeat chart set format designed to be easier to parse than existing "memo-like" formats (memo, youbeat, etc ...). The goal of this format is to allow for easier and faster creation of tools and simulators.
+`.memon` is a new json-based jubeat chart set format designed to be easier to parse than existing "memo-like" formats (memo, youbeat, etc ...). The goal of this format is to allow for easier and faster creation of tools and simulators.
 
 This repo provides a bare description of the format using draft-07 JSON Schema
 
