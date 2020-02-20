@@ -56,7 +56,7 @@
                     "required": ["position", "length"]
                 }
             },
-            "required": ["song title","artist","music path","album cover path","BPM","offset"]
+            "required": ["song title","artist","BPM","offset"]
         },
         "data": {
             "description": "Charts with difficulty names used as keys",
