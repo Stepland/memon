@@ -6,7 +6,8 @@
     "properties": {
         "version": {
             "description": "The version string for the schema format",
-            "type": "string"
+            "type": "string",
+            "enum": ["0.2.0"]
         },
         "metadata": {
             "description": "Contains information that applies to the whole set of charts",
@@ -36,6 +37,23 @@
                 "offset": {
                     "description": "In seconds, opposite of the time position of the first beat in the music file",
                     "type": "number"
+                },
+                "preview": {
+                    "description": "Describes the part of the music file that's to be played on loop when previewing this song",
+                    "type": "object",
+                    "properties": {
+                        "position": {
+                            "description": "In seconds, Time at which preview should start",
+                            "type": "number",
+                            "minimum": 0
+                        },
+                        "length": {
+                            "description": "In seconds, for how long should the preview be played past the starting point",
+                            "type": "number",
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["position", "length"]
                 }
             },
             "required": ["song title","artist","music path","album cover path","BPM","offset"]
