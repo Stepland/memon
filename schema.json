@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "http://json-schema.org/draft/2019-09/schema",
     "title": "memon",
     "description": "A jubeat chart set description format based on json",
     "type": "object",
@@ -7,7 +7,7 @@
         "version": {
             "description": "The version string for the schema format",
             "type": "string",
-            "enum": ["0.3.0"]
+            "enum": ["1.0.0"]
         },
         "metadata": {
             "description": "Contains information that applies to the whole set of charts",
@@ -60,7 +60,7 @@
                     "type": "string"
                 }
             },
-            "required": ["song title","artist","BPM","offset"]
+            "required": ["song title", "artist", "BPM", "offset"]
         },
         "data": {
             "description": "Charts with difficulty names used as keys",
@@ -97,9 +97,9 @@
                                     "minimum": 0
                                 },
                                 "l": {
-                                    "description": "Lenght in ticks, 0 if not a long note",
+                                    "description": "Long Note Lenght in ticks",
                                     "type": "integer",
-                                    "minimum": 0
+                                    "minimum": 1
                                 },
                                 "p": {
                                     "description": "Tail starting position, relative to note position, counting from 0 to 11 clockwise and expanding out starting one square above the note",
@@ -108,13 +108,18 @@
                                     "maximum": 11
                                 }
                             },
-                            "required": ["n","t","l","p"]
+                            "required": ["n", "t"],
+                            "dependentRequired": {
+                                "l": ["p"],
+                                "p": ["l"]
+                            },
+                            "additionalProperties": false
                         }
                     }
                 },
-                "required": ["level","resolution","notes"]
+                "required": ["level", "resolution", "notes"]
             }
         }
     },
-    "required": ["version","metadata","data"]
+    "required": ["version", "metadata", "data"]
 }
