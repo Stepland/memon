@@ -7,7 +7,7 @@
         "version": {
             "description": "The version string for the schema format",
             "type": "string",
-            "enum": ["0.2.0"]
+            "enum": ["0.3.0"]
         },
         "metadata": {
             "description": "Contains information that applies to the whole set of charts",
@@ -54,6 +54,10 @@
                         }
                     },
                     "required": ["position", "length"]
+                },
+                "preview path": {
+                    "description": "Path to the music preview, relative to the memon file",
+                    "type": "string"
                 }
             },
             "required": ["song title","artist","BPM","offset"]
