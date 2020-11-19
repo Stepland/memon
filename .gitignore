@@ -1,0 +1,6 @@
+.vscode
+.pytest_cache
+build
+_build
+**.pyc
+__pycache__

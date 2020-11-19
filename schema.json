@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
     "title": "memon",
     "description": "A jubeat chart set description format based on json",
     "type": "object",
@@ -60,7 +60,7 @@
                     "type": "string"
                 }
             },
-            "required": ["song title","artist","BPM","offset"]
+            "required": ["song title", "artist", "BPM", "offset"]
         },
         "data": {
             "description": "Charts with difficulty names used as keys",
@@ -93,7 +93,7 @@
                                 },
                                 "t": {
                                     "description": "Timing, measured in \"ticks\" as specified with the resolution",
-                                    "type":"integer",
+                                    "type": "integer",
                                     "minimum": 0
                                 },
                                 "l": {
@@ -108,13 +108,13 @@
                                     "maximum": 11
                                 }
                             },
-                            "required": ["n","t","l","p"]
+                            "required": ["n", "t", "l", "p"]
                         }
                     }
                 },
-                "required": ["level","resolution","notes"]
+                "required": ["level", "resolution", "notes"]
             }
         }
     },
-    "required": ["version","metadata","data"]
+    "required": ["version", "metadata", "data"]
 }
