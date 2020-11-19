@@ -60,6 +60,13 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+html_theme_options = {
+    'description': 'memo + json',
+    'logo': 'memon-logo.svg',
+    'logo_name': True,
+    'fixed_sidebar': True,
+}
+
 # At the bottom of conf.py
 def setup(app):
     app.add_config_value(

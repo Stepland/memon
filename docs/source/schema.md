@@ -190,7 +190,7 @@ A classic long note, with a tail
 - Between 0 and 11 inclusive
 - Tail starting position, relative to note position, counting from 0 to 11, couting spiraling out, clockwise, starting one square above the note
 
-  Here the possible values have been laid out visually,`"■"` marks the note :
+  Here the possible values have been laid out visually, `"■"` marks the note :
   ```
          8
          4
