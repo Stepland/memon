@@ -9,4 +9,6 @@
 
 
 - [Schema](schema.md)
+- [Validation](validation.md)
+- [Changelog](changelog.md)
 

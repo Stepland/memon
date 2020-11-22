@@ -11,10 +11,15 @@ This page gives a top-down view of how a memon file is structured
     "data": {}
 }
 ```
+This is the root / top level structure of a memon file.
+
+It's a json object with the following keys :
 
 **version**
 - string, required
-- Indicates the schema version in use in this document
+- Indicates the schema version this memon file uses, follows [semver](https://semver.org/)
+  
+  If a memon file does not have this key it's probably following the pre-semver format
 
 **metadata**
 - object, required
@@ -61,7 +66,7 @@ Contains information that applies to the whole set of charts
 
 **offset**
 - number, required
-- In seconds, opposite of the time position of the first beat in the music file. For instance, if the first beat occurs at 0.15 seconds, `offset̀` should be -0.15
+- In seconds, opposite of the time position of the first beat in the music file. For instance, if the first beat occurs at 0.15 seconds in the audio file, `offset̀` should be -0.15
 
 **preview**
 - object, optional
@@ -129,12 +134,13 @@ When sorting, difficulties may be presented in that order :
 - Chart level, can be an integer or a decimal value
 
 **resolution**
-- integer, required
-- Number of ticks in a beat, denominator of all beat fractions
+- number, required
+- Greater than 0, always an integer
+- Number of ticks in a beat, denominator of all beat fractions. Usually 240
 
 **notes**
 - array, required
-- Array of [tap notes](#tap-note) and [long notes](#long-note)
+- Array of [tap notes](#tap-note) and [long notes](#long-note) that make up the chart
 
 
 ## Tap Note
@@ -149,8 +155,8 @@ When sorting, difficulties may be presented in that order :
 A classic note
 
 **n**
-- integer, required
-- Between 0 and 15
+- number, required
+- Integer between 0 and 15 inclusive
 - The note position, given this way :
   ```
    0  1  2  3
@@ -160,9 +166,16 @@ A classic note
   ```
 
 **t**
-- integer, required
-- Greater or equal to 0
-- Note timing in ticks
+- number, required
+- Integer greater or equal to 0
+- Note timing in ticks.
+
+  It can be seen as the numerator of the beat fraction.
+
+  A tick is a fraction of the beat, its duration is defined as 1/ the chart's resolution.
+  For example if the resolution is 240, a tick lasts for 1/240th of a beat.
+
+  For more info about measuring time in ticks ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
 
 
 ## Long Note
@@ -172,7 +185,7 @@ A classic note
     "n": 0,
     "t": 3600,
     "l": 10000,
-    "p": 7
+    "p": 5
 }
 ```
 
@@ -181,14 +194,14 @@ A classic long note, with a tail
 **n** and **t** are the same as in a [tap note](#tap-note)
 
 **l**
-- integer, required
-- Greater than 0
+- number, required
+- Integer greater than 0
 - Long note duration ("l" as in length ?!), in ticks
 
 **p**
-- integer, required
-- Between 0 and 11 inclusive
-- Tail starting position, relative to note position, counting from 0 to 11, couting spiraling out, clockwise, starting one square above the note
+- number, required
+- Integer between 0 and 11 inclusive
+- Tail starting position, relative to note position, counting from 0 to 11, spiraling out, clockwise, starting one square above the note
 
   Here the possible values have been laid out visually, `"■"` marks the note :
   ```
