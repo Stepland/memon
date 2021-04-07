@@ -6,8 +6,7 @@
     "properties": {
         "version": {
             "description": "The version string for the schema format",
-            "type": "string",
-            "enum": ["1.0.0"]
+            "const": "1.0.0"
         },
         "metadata": {
             "description": "Contains information that applies to the whole set of charts",
