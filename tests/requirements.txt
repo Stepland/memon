@@ -1,2 +1,2 @@
-jschon<1
-pytest<7
+jschon~=0.7.0
+pytest~=6.0
