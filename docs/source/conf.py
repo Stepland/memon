@@ -13,8 +13,6 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-import recommonmark
-from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
@@ -34,7 +32,7 @@ release = '1.0.0'
 extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx_rtd_theme',
-    'recommonmark'
+    'myst_parser'
 ]
 
 # Make sure the target is unique
@@ -67,16 +65,3 @@ html_theme_options = {
     'logo_only': False,
     'collapse_navigation': False,
 }
-
-# At the bottom of conf.py
-def setup(app):
-    app.add_config_value(
-        'recommonmark_config',
-        {
-            'enable_auto_toc_tree': True,
-            'auto_toc_maxdepth': 2,
-            'auto_toc_tree_section': 'memon',
-        },
-        True
-    )
-    app.add_transform(AutoStructify)
