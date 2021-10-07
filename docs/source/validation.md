@@ -53,9 +53,9 @@ Parsers should only keep one note for each `(n, t)` couple
 
 ### Hitbox Overlap
 
-*(This describes **hitbox** overlap, for marker animation overlap see [this section](#marker-animation-overlap))*
+*(This describes **hitbox** overlap, for marker animation overlap see {ref}`marker-animation-overlap`)*
 
-Another possible problem is this :
+This set of notes has another problem, but at first glance it's unclear why :
 
 ```json
 [
@@ -64,7 +64,7 @@ Another possible problem is this :
 ]
 ```
 
-The problem becomes obvious when viewed on a timeline :
+The problem becomes obvious when the data is plotted on a timeline :
 
 ```
 ticks       0   1   2   3   4   5   6   7   8   9   10  11  ...
@@ -93,6 +93,7 @@ To clarify, a long note *lasts* for the amount of ticks specified by its `L` key
 
 Parsers should **reject** charts with these kinds of overlapping notes.
 
+(marker-animation-overlap)=
 ### Marker Animation Overlap
 
 Due to the duration of a marker animation, two notes whose hitboxes don't overlap can however happen too close to one another to allow both marker animations to appear separately. Most official jubeat charts avoid this (with some notable exceptions like [Polaris ADV](https://remywiki.com/Polaris#Trivia)).
