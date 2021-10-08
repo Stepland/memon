@@ -38,7 +38,6 @@ It's a json object with the following keys :
     "BPM": 120.0,
     "offset": 0.0,
     "preview": {},
-    "preview path": "",
 }
 ```
 Contains information that applies to the whole set of charts
@@ -60,11 +59,8 @@ Contains information that applies to the whole set of charts
     - number, required
     - In seconds, opposite of the time position of the first beat in the music file. For instance, if the first beat occurs at 0.15 seconds in the audio file, `offset̀` should be -0.15
 - **preview**
-    - object, optional
-    - If present, contains a {ref}`preview object <preview>`
-- **preview path**
-    - string, optional
-    - Path to a preview file to be played on loop at the music select screen. Alternative to the music sample described by `preview`.
+    - object or string, optional
+    - Contains either a {ref}`preview object <preview>` or a path to a bms-style preview file
 
 (preview)=
 ## Preview
