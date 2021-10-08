@@ -31,10 +31,10 @@ It's a json object with the following keys :
 
 ```json
 {
-    "song title": "",
+    "title": "",
     "artist": "",
-    "music path": "",
-    "album cover path": "",
+    "audio": "",
+    "jacket": "",
     "BPM": 120.0,
     "offset": 0.0,
     "preview": {},
@@ -42,16 +42,17 @@ It's a json object with the following keys :
 ```
 Contains information that applies to the whole set of charts
 
-- **song title**
+- **title**
     - string, required
+    - Song title
 - **artist**
     - string, required
-- **music path**
+- **audio**
     - string, optional
     - Path to the music file, *relative* to the memon file.
-- **album cover path**
+- **jacket**
     - string, optional
-    - Relative path to the jacket / album cover / album art to be shown in music select for example. usually a square image
+    - Relative path to the jacket / album cover / album art to be shown in music select for example. usually a square image.
 - **BPM**
     - number, required
     - Song tempo in Beats per Minute.
@@ -67,17 +68,17 @@ Contains information that applies to the whole set of charts
 
 ```json
 {
-    "position": 0.0,
-    "length": 0.0,
+    "start": 0.0,
+    "duration": 0.0,
 }
 ```
 
 Describes the part of the music file that's meant to be played on loop when previewing this song at the music select screen
 
-- **position**
+- **start**
     - number, required
     - In seconds, start of the loop
-- **length**
+- **duration**
     - number, required
     - In seconds, duration of the loop
 

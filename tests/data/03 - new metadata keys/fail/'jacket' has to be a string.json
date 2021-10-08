@@ -1,11 +1,11 @@
 {
     "version": "1.0.0",
     "metadata": {
-        "song title": "",
+        "title": "",
         "artist": "",
+        "jacket": 1,
         "BPM": 1,
-        "offset": 0,
-        "preview": "blablabla"
+        "offset": 0
     },
     "data": {}
 }
