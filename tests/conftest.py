@@ -51,10 +51,6 @@ class ItemWithPath(pytest.Item):
 class ValidExample(ItemWithPath):
     def runtest(self):
         raise_if_invalid(result_of(self.path))
-    
-    def repr_failure(self, excinfo):
-        parent = self.getparent(ExampleSubfolder)
-        return f"Example {parent.name}::{self.name} did not pass validation"
 
 
 class InvalidExample(ItemWithPath):

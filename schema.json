@@ -12,7 +12,7 @@
             "description": "Contains information that applies to the whole set of charts",
             "type": "object",
             "properties": {
-                "song title": {
+                "title": {
                     "description": "The title of the song",
                     "type": "string"
                 },
@@ -20,11 +20,11 @@
                     "description": "The song artist",
                     "type": "string"
                 },
-                "music path": {
+                "audio": {
                     "description": "Path to the music file, relative to the memon file",
                     "type": "string"
                 },
-                "album cover path": {
+                "jacket": {
                     "description": "Path to the album cover, relative to the memon file",
                     "type": "string"
                 },
@@ -43,18 +43,18 @@
                             "description": "Preview defined as a sample from the music file",
                             "type": "object",
                             "properties": {
-                                "position": {
+                                "start": {
                                     "description": "In seconds, Time at which preview should start",
                                     "type": "number",
                                     "minimum": 0
                                 },
-                                "length": {
+                                "duration": {
                                     "description": "In seconds, for how long should the preview be played past the starting point",
                                     "type": "number",
                                     "minimum": 0
                                 }
                             },
-                            "required": ["position", "length"]
+                            "required": ["start", "duration"]
                         },
                         {
                             "description": "Preview defined as a separate audio file",
@@ -63,7 +63,7 @@
                     ]
                 }
             },
-            "required": ["song title", "artist", "BPM", "offset"]
+            "required": ["title", "artist", "BPM", "offset"]
         },
         "data": {
             "description": "Charts with difficulty names used as keys",
