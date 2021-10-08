@@ -1,0 +1,14 @@
+{
+    "version": "1.0.0",
+    "metadata": {
+        "song title": "",
+        "artist": "",
+        "BPM": 1,
+        "offset": 0,
+        "preview": {
+            "position": 0,
+            "duration": 0
+        }
+    },
+    "data": {}
+}

@@ -39,24 +39,28 @@
                 },
                 "preview": {
                     "description": "Describes the part of the music file that's to be played on loop when previewing this song",
-                    "type": "object",
-                    "properties": {
-                        "position": {
-                            "description": "In seconds, Time at which preview should start",
-                            "type": "number",
-                            "minimum": 0
+                    "oneOf": [{
+                            "description": "Preview defined as a sample from the music file",
+                            "type": "object",
+                            "properties": {
+                                "position": {
+                                    "description": "In seconds, Time at which preview should start",
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "length": {
+                                    "description": "In seconds, for how long should the preview be played past the starting point",
+                                    "type": "number",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": ["position", "length"]
                         },
-                        "length": {
-                            "description": "In seconds, for how long should the preview be played past the starting point",
-                            "type": "number",
-                            "minimum": 0
+                        {
+                            "description": "Preview defined as a separate audio file",
+                            "type": "string"
                         }
-                    },
-                    "required": ["position", "length"]
-                },
-                "preview path": {
-                    "description": "Path to the music preview, relative to the memon file",
-                    "type": "string"
+                    ]
                 }
             },
             "required": ["song title", "artist", "BPM", "offset"]
@@ -92,7 +96,7 @@
                                 },
                                 "t": {
                                     "description": "Timing, measured in \"ticks\" as specified with the resolution",
-                                    "type":"integer",
+                                    "type": "integer",
                                     "minimum": 0
                                 },
                                 "l": {
