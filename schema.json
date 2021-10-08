@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "memon",
     "description": "A jubeat chart set description format based on json",
     "type": "object",
@@ -95,14 +95,28 @@
                                     "maximum": 15
                                 },
                                 "t": {
-                                    "description": "Timing, measured in \"ticks\" as specified with the resolution",
-                                    "type": "integer",
-                                    "minimum": 0
+                                    "description": "Note time",
+                                    "oneOf": [{
+                                            "description": "Time measured in \"ticks\" as specified with the resolution",
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        {
+                                            "$ref": "#/$defs/timeFraction"
+                                        }
+                                    ]
                                 },
                                 "l": {
-                                    "description": "Long Note Lenght in ticks",
-                                    "type": "integer",
-                                    "minimum": 1
+                                    "description": "Long note duration",
+                                    "oneOf": [{
+                                            "description": "Long Note Lenght in ticks",
+                                            "type": "integer",
+                                            "minimum": 1
+                                        },
+                                        {
+                                            "$ref": "#/$defs/nonZeroTimeFraction"
+                                        }
+                                    ]
                                 },
                                 "p": {
                                     "description": "Tail starting position, relative to note position, counting from 0 to 11 clockwise and expanding out starting one square above the note",
@@ -124,5 +138,48 @@
             }
         }
     },
-    "required": ["version", "metadata", "data"]
+    "required": ["version", "metadata", "data"],
+    "$defs": {
+        "timeFraction": {
+            "description": "Time represented as a fraction",
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "prefixItems": [{
+                    "description": "Integral part",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                {
+                    "description": "Numerator",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                {
+                    "description": "Denominator",
+                    "type": "integer",
+                    "minimum": 1
+                }
+            ]
+        },
+        "nonZeroTimeFraction": {
+            "description": "Non-zero time represented as a fraction",
+            "allOf": [{
+                    "$ref": "#/$defs/timeFraction"
+                },
+                {
+                    "not": {
+                        "prefixItems": [{
+                                "const": 0
+                            },
+                            {
+                                "const": 0
+                            },
+                            true
+                        ]
+                    }
+                }
+            ]
+        }
+    }
 }

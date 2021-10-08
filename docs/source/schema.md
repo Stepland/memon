@@ -136,7 +136,16 @@ When sorting, difficulties may be presented in that order :
 }
 ```
 
-A classic note
+A classic note.
+
+**t** can also be defined this way :
+
+```json
+{
+    "n": 0,
+    "t": [1, 0, 1]
+}
+```
 
 - **n**
     - number, required
@@ -145,20 +154,30 @@ A classic note
       ```
       0  1  2  3
       4  5  6  7
-      8  9 10 11
+      8  9  10 11
       12 13 14 15
       ```
 - **t**
-    - number, required
-    - Integer greater or equal to 0
-    - Note timing in ticks.
+    - required
+    - as a number :
+        - Integer greater or equal to 0
+        - Note time in ticks.
 
-    It can be seen as the numerator of the beat fraction.
+          Ticks are fractions of the beat.
+          The resolution defines how many ticks are in a beat for a given chart.
+          In other words if the resolution is 420, a tick lasts for 1/420th of a beat
+  
+          For more info about measuring time in ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
+    - as an array :
+        - The array MUST have length 3
+        - `t[0]` and `t[1]` are integers greater or equal to 0
+        - `t[2]` is an integer greater than 0
+        - Reprensents the note time in beats as a fraction, the value can be retrieved by the following computation :
+          ```
+          t[0] + (t[1] / t[2])
+          ```
 
-    A tick is a fraction of the beat, its duration is defined as 1/ the chart's resolution.
-    For example if the resolution is 240, a tick lasts for 1/240th of a beat.
-
-    For more info about measuring time in ticks ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
+          For instance `[1, 2, 3]` means the note happens 2/3 of a beat after beat 1
 
 (long-note)=
 ## Long Note
@@ -174,12 +193,28 @@ A classic note
 
 A classic long note, with a tail
 
+**`l`** can also take the same 3-int tuple form as **`t`**, except it has to represent a non-zero duration :
+
+```json
+{
+    "n": 0,
+    "t": 3600,
+    "l": [0, 1, 10],
+    "p": 5
+}
+```
+
 **n** and **t** are the same as in a {ref}`tap note <tap-note>`
 
 - **l**
-    - number, required
-    - Integer greater than 0
-    - Long note duration ("l" as in length ?!), in ticks
+    - required
+    - as a number :
+        - Integer greater than 0
+        - Long note duration ("l" as in length ?!), in ticks
+    - as an array:
+        - same constraints as the array-variant of **t**
+        - `t[0]` and `t[1]` cannot both be zero at the same time
+        - Long note duration as a beat fraction
 - **p**
     - number, required
     - Integer between 0 and 11 inclusive
