@@ -59,7 +59,11 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_logo = '_static/memon-logo-white.svg'
+html_logo = '_static/memon-logo.svg'
+
+html_css_files = [
+    'css/custom.css',
+]
 
 html_theme_options = {
     'logo_only': False,
