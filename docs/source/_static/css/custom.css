@@ -1,0 +1,7 @@
+/* import read the docs's css file */
+@import 'theme.css';
+
+/* make the logo in the side bar less wide */
+.wy-side-nav-search > a img.logo {
+    max-width: 80%;
+}
