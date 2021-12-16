@@ -54,11 +54,14 @@ Contains information that applies to the whole set of charts
     - string, optional
     - Relative path to the jacket / album cover / album art to be shown in music select for example. usually a square image.
 - **BPM**
-    - number, required
+    - number or string, required
     - Song tempo in Beats per Minute.
+    - Striclty positive
+    - Strings allowed for easier decimal representation preservation
 - **offset**
-    - number, required
+    - number or string, required
     - In seconds, opposite of the time position of the first beat in the music file. For instance, if the first beat occurs at 0.15 seconds in the audio file, `offset̀` should be -0.15
+    - Strings allowed for easier decimal representation preservation
 - **preview**
     - object or string, optional
     - Contains either a {ref}`preview object <preview>` or a path to a bms-style preview file
@@ -76,11 +79,15 @@ Contains information that applies to the whole set of charts
 Describes the part of the music file that's meant to be played on loop when previewing this song at the music select screen
 
 - **start**
-    - number, required
+    - number or string, required
     - In seconds, start of the loop
+    - Positive
+    - Strings allowed for easier decimal representation preservation
 - **duration**
-    - number, required
+    - number or string, required
     - In seconds, duration of the loop
+    - Strictly positive
+    - Strings allowed for easier decimal representation preservation
 
 (data)=
 ## Data
@@ -165,7 +172,7 @@ A classic note.
 
           Ticks are fractions of the beat.
           The resolution defines how many ticks are in a beat for a given chart.
-          In other words if the resolution is 420, a tick lasts for 1/420th of a beat
+          In other words if the resolution is 420, a tick lasts for 1/420th oLike for the BPM, sf a beat
   
           For more info about measuring time in ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
     - as an array :

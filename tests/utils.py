@@ -7,7 +7,7 @@ from jschon.jsonschema import Scope
 from jschon import create_catalog, JSONSchema, JSON
 import pytest
 
-_catalog = create_catalog('2020-12')
+_catalog = create_catalog("2020-12")
 SCHEMA = JSONSchema.loadf("schema.json", catalog=_catalog)
 
 def prettify_path(json_path: str) -> str:

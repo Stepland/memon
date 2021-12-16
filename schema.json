@@ -30,12 +30,11 @@
                 },
                 "BPM": {
                     "description": "Song tempo in Beats per Minute",
-                    "type": "number",
-                    "exclusiveMinimum": 0
+                    "$ref": "#/$defs/strictlyPositiveDecimal"
                 },
                 "offset": {
                     "description": "In seconds, opposite of the time position of the first beat in the music file",
-                    "type": "number"
+                    "$ref": "#/$defs/decimal"
                 },
                 "preview": {
                     "description": "Describes the part of the music file that's to be played on loop when previewing this song",
@@ -45,13 +44,11 @@
                             "properties": {
                                 "start": {
                                     "description": "In seconds, Time at which preview should start",
-                                    "type": "number",
-                                    "minimum": 0
+                                    "$ref": "#/$defs/positiveDecimal"
                                 },
                                 "duration": {
                                     "description": "In seconds, for how long should the preview be played past the starting point",
-                                    "type": "number",
-                                    "minimum": 0
+                                    "$ref": "#/$defs/strictlyPositiveDecimal"
                                 }
                             },
                             "required": ["start", "duration"]
@@ -179,6 +176,40 @@
                         ]
                     }
                 }
+            ]
+        },
+        "decimal": {
+            "description": "a decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number"
+            },
+            {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+            }
+            ]
+        },
+        "positiveDecimal": {
+            "description": "a decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number"
+            },
+            {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)?$"
+            }
+            ]
+        },
+        "strictlyPositiveDecimal": {
+            "description": "a strictly positive decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number",
+                "exclusiveMinimum": 0
+            },
+            {
+                "type": "string",
+                "pattern": "^(0\\.\\d*[1-9]\\d*|\\d*[1-9]\\d*(\\.\\d+)?)$"
+            }
             ]
         }
     }

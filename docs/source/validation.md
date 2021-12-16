@@ -103,19 +103,13 @@ Since this is mostly an implicit rule that's not strictly followed by official c
 
 ## Decimal values
 
-If possible, non-integer values like `BPM` or `offset` should be manipulated using a [Decimal Data Type](https://en.wikipedia.org/wiki/Decimal_data_type) to preserve their original decimal representation. I think no one likes to see the BPM they defined as a clean `195.3` in the editor be stored as a messy `195.3000030517578125` in the file.
+If possible, non-integer values like `BPM` or `offset` should be manipulated using a [Decimal Data Type](https://en.wikipedia.org/wiki/Decimal_data_type) to preserve their original decimal representation. I think no one likes to see the BPM they defined as a clean `195.3` in the editor be stored as a messy `195.3000030517578125` in the file. If doing this is too hard with your language / library of choice, keep in mind that `1.0.0` allows strings instead :
 
-Be careful that the serialized values in the resulting file must still be *number litterals*, not strings.
-
-- **Good**
+- **Valid**
   ```json
   { "BPM" : 195.3 }
   ```
-- **Bad**
+- **Valid since 1.0.0**
   ```json
   { "BPM": "195.3" }
   ```
-
-This is not that easy. Python's standard module `json`, for instance, allows *deserializing* (reading) numbers in a json file as `decimal.Decimal` instances, but has no easy way of *serializing* (writing) `decimal.Decimal` instances as a json number litteral that respects the original representation.
-
-A possible solution is to use the [simplejson](https://pypi.org/project/simplejson/) module as a near drop-in replacement for `json` and use the `use_decimal` options

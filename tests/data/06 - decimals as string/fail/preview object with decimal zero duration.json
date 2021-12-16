@@ -6,8 +6,8 @@
         "BPM": 1,
         "offset": 0,
         "preview": {
-            "start": 0,
-            "duration": 1
+            "start": "0",
+            "duration": "0.000"
         }
     },
     "data": {}
