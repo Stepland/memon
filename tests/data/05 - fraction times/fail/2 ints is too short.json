@@ -1,11 +1,5 @@
 {
     "version": "1.0.0",
-    "metadata": {
-        "title": "",
-        "artist": "",
-        "BPM": 1,
-        "offset": 0
-    },
     "data": {
         "BSC": {
             "level": 0,

@@ -1,10 +1,13 @@
 {
     "version": "1.0.0",
-    "metadata": {
-        "title": "",
-        "artist": "",
-        "BPM": 123.456,
-        "offset": "-0.24"
+    "timing": {
+        "offset": "-0.24",
+        "bpms": [
+            {
+                "beat": 0,
+                "bpm": 123.456
+            }
+        ]
     },
     "data": {}
 }
