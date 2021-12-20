@@ -237,32 +237,61 @@ A classic long note, with a tail
     - Long note duration in ticks or beats
 - **p**
     - number, required
-    - Integer between 0 and 11 inclusive
-    - Tail starting position, relative to note position, counting from 0 to 11, spiraling out, clockwise, starting one square above the note
+    - Integer between 0 and 5 inclusive
+    - Tail starting position in 6-notation :
+
+      For every given button on the controler, there are 6 possible starting
+      positions for long note tails.
+
+      For example if the long note is held here :
+
+        ```none
+        □□□□
+        □□□□
+        □■□□
+        □□□□
+        ```
+      
+      the long note's tail can start on any of the six squares marked with an × :
+
+        ```none
+        □×□□
+        □×□□
+        ×■××
+        □×□□
+        ```
+
+      6-notation labels these 6 possibilities this way :
+
+        - 0, 1, 2 : horizontal tails from left to right
+        - 3, 4, 5 : vertical tails from top to bottom
+      
+      If we replace `×`s with the numbers we get :
+
+        ```none
+        □3□□
+        □4□□
+        0■12
+        □5□□
+        ```
     
-      Here the possible values have been laid out visually, `"■"` marks the note :
-      ```
-             8
-             4
-             0
-      11 7 3 ■ 1 5 9
-             2
-             6
-            10
-      ```
+      For example, `"p": 0` produces the following long note :
+
+        ```none
+        □□□□
+        □□□□
+        ▷■□□
+        □□□□
+        ```
     
-      For example, `"p": 7` produces the following long note :
-      ```
-      ▷—■
-      ```
-    
-      and `"p": 10` gives :
-      ```
-      ■
-      |
-      |
-      △
-      ```
+      and `"p": 3` gives :
+
+        ```none
+        □▽□□
+        □|□□
+        □■□□
+        □□□□
+        ```
 
 
 ## Symbolic Time

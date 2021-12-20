@@ -10,26 +10,6 @@ So, here are a few things to look out for or to keep in mind when reading or wri
 The note schema is fairly minimal. It does its best to eliminate most invalid notes by restricting the possible values of each key. However it still allows for the following false positives (notes that are conscidered valid by the schema but shouldn't) :
 
 
-### Off-Screen Tails
-
-The encoding convention for long note tails in versions `0.y.z` of the format allows for some invalid notes. Nothing in the raw json schema prevents you from writing such a note :
-
-```json
-{ "n": 0, "t": 0, "l": 240, "p": 11 }
-```
-
-All the numbers are within the intervals defined in the schema, however this would correspond to a long note that would look like this :
-
-```
-▷——■□□□
-   □□□□
-   □□□□
-   □□□□
-```
-
-Notice the tail starting outside the screen.
-
-
 ### Uniqueness
 
 The schema itself does not prevent the following cases from happening in the array of notes that make up the chart :
