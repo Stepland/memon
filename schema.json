@@ -230,7 +230,7 @@
                     "$ref": "#/$defs/decimal"
                 },
                 "resolution": {
-                    "description": "Number of ticks in a beat for the bpm events",
+                    "description": "Number of ticks in a beat for the bpms and the hakus",
                     "type": "integer",
                     "minimum": 1,
                     "default": 240
@@ -255,6 +255,13 @@
                         "required": ["beat", "bpm"]
                     },
                     "default": [{"beat": 0, "bpm": 120}]
+                },
+                "hakus": {
+                    "description": "Array of HAKUs, dictates how the background should bounce if the bouncing pattern differs from the usual 4/4",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/timeInBeats"
+                    }
                 }
             }
         }

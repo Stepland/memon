@@ -1,0 +1,11 @@
+{
+    "version": "1.0.0",
+    "data": {
+        "a chart": {
+            "timing": {
+                "hakus": [0, 1, 2, 3]
+            },
+            "notes": []
+        }
+    }
+}

@@ -28,6 +28,7 @@
         - `offset` changed sign, it's now the time at which the first beat occurs in the audio file, instead of its opposite
         - `offset` now has an implicit default value of 0 in case no timing object in the file defines it
         - BPM changes can now be stored in the `bpms` array !
+        - `hakus` allow storing special background bounce patterns
 - **Removed**
     - In the metadata object :
         - `preview path` is now replaced with the polymorphic `preview`
