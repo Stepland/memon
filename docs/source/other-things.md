@@ -95,8 +95,27 @@ If possible, non-integer values like `bpm` or `offset` should be manipulated usi
     { "bpm": "195.3" }
     ```
 
+## Timing objects
 
-## Multiple Timing Objects
+### Duplicate BPMs
+
+If there are several different bpms hapenning at the same beat in the `bpms` array, the last one is used.
+
+For example, in this case :
+
+```json
+{
+    "bpms": [
+        {"beat": 0, "bpm": 120},
+        {"beat": 0, "bpm": 124}
+    ]
+}
+```
+
+The BPM on beat zero is set to 124
+
+(multiple-timing-objects)=
+### Multiple Timing Objects
 
 memon version 1.0.0 introduced [timing objects](schema.md#timing) in two different places in the file, either at the root or in a chart.
 

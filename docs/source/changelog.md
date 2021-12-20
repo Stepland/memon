@@ -1,5 +1,39 @@
 # Changelog
 
+## v1.0.0
+- **Added**
+    - Symbolic times such as `t` and `l` in notes can also now be expressed as a tuple of 3 ints representing a mixed number
+    - Decimal numbers such as the offset or the bpm can now also be stored as strings to make it easier to preserve clean decimal notations
+- **Changed**
+    - In note objects :
+        - `l` and `p` are now optional for tap notes
+        - `p` now uses the 6-notation
+    - `metadata` is now optional
+    - In the metadata object :
+        - `preview` can now also be a string, replacing `preview path`
+        - Renamed `song title` to `title`
+        - Renamed `music path` to `audio`
+        - Renamed `album cover path` to `jacket`
+        - All keys are now optional
+    - In the preview object :
+        - Renamed `position` to `start`
+        - Renamed `length` to `duration`
+    - In the chart object :
+        - `level` can now also be a decimal number, either as a number literal or as a string
+        - `level` is now optional
+        - `resolution` is now optional
+        - `resolution` now has an implicit default value of 240 in case the key is missing from the chart object
+    - Timing information is now stored in dedicated timing objects, one at the root of the memon file to act as a fallback, and one for each chart for per-chart timing info
+    - In the timing object :
+        - `offset` changed sign, it's now the time at which the first beat occurs in the audio file, instead of its opposite
+        - `offset` now has an implicit default value of 0 in case no timing object in the file defines it
+        - BPM changes can now be stored in the `bpms` array !
+- **Removed**
+    - In the metadata object :
+        - `preview path` is now replaced with the polymorphic `preview`
+        - `offset` is now replaced by the offset in timing objects
+        - `BPM` is now replaced by the bpms in timing objects
+
 ## v0.3.0
 - **Added**
     - `metadata.preview path` allows audio preview files to be specified
