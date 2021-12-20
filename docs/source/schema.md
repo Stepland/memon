@@ -8,6 +8,7 @@ This page gives a top-down view of how a memon file is structured
 {
     "version": "x.y.z",
     "metadata": {},
+    "timing": {},
     "data": {}
 }
 ```
@@ -19,14 +20,17 @@ It's a json object with the following keys :
     - string, required
     - Indicates the schema version this memon file uses, follows [semver](https://semver.org/). If a memon file does not have this key it's probably following the pre-semver format
 - **metadata**
-    - object, required
-    - Contains the {ref}`metadata object <metadata>`
+    - object, optional
+    - Contains the [metadata object](#metadata)
+- **timing**
+    - object, optional
+    - Contains the default / fallback [timing object](#timing)
+    - See [](other-things.md#multiple-timing-objects) for more details on the behavior this should have
 - **data**
     - object, required
-    - Contains the {ref}`data object <data>`
+    - Contains the [data object](#data)
 
 
-(metadata)=
 ## Metadata
 
 ```json
@@ -35,38 +39,27 @@ It's a json object with the following keys :
     "artist": "",
     "audio": "",
     "jacket": "",
-    "BPM": 120.0,
-    "offset": 0.0,
     "preview": {},
 }
 ```
 Contains information that applies to the whole set of charts
 
 - **title**
-    - string, required
+    - string, optional
     - Song title
 - **artist**
-    - string, required
+    - string, optional
 - **audio**
     - string, optional
     - Path to the music file, *relative* to the memon file.
 - **jacket**
     - string, optional
     - Relative path to the jacket / album cover / album art to be shown in music select for example. usually a square image.
-- **BPM**
-    - number or string, required
-    - Song tempo in Beats per Minute.
-    - Striclty positive
-    - Strings allowed for easier decimal representation preservation
-- **offset**
-    - number or string, required
-    - In seconds, opposite of the time position of the first beat in the music file. For instance, if the first beat occurs at 0.15 seconds in the audio file, `offset̀` should be -0.15
-    - Strings allowed for easier decimal representation preservation
 - **preview**
     - object or string, optional
-    - Contains either a {ref}`preview object <preview>` or a path to a bms-style preview file
+    - Contains either a [preview object](#preview) or a path to a bms-style preview file
 
-(preview)=
+
 ## Preview
 
 ```json
@@ -89,7 +82,54 @@ Describes the part of the music file that's meant to be played on loop when prev
     - Strictly positive
     - Strings allowed for easier decimal representation preservation
 
-(data)=
+
+## Timing
+
+```json
+{
+    "offset": 0.0,
+    "resolution": 1,
+    "bpms": []
+}
+```
+
+Describes the relationship between seconds in the audio file and symbolic time (time measured in beats)
+
+- **offset**
+    - number or string, optional
+    - In seconds, time at which the first beat occurs in the music file.
+    
+        For instance, if the first beat occurs at 0.15 seconds in the audio file, the offset should be the number literal `0.15`, or the string `"0.15"` if the tools used can't keep a clean decimal representation when using json number literals.
+- **resolution**
+    - integer, optional
+    - Greater than 0, always an integer
+    - Number of ticks in a beat for the bpm events defined in this timing object, if some bpm events define a beat using a single integer, this is the implicit fraction denominator to use to convert the integer number of ticks to a fractional number of beats.
+- **bpms**
+    - array, optional
+    - Array of [BPM events](#bpm)
+
+
+## BPM
+
+```json
+{
+    "beat": 0,
+    "bpm": 120
+}
+```
+
+Defines a change in tempo measured in beats per minutes happening at a specific symbolic time (measured in beats)
+
+- **beat**
+    - [symbolic time](#symbolic-time), required
+    - Beat at which the tempo changes
+- **bpm**
+    - number or string
+    - Song tempo at the given beat, in Beats per Minute.
+    - Striclty positive
+    - Strings allowed for easier decimal representation preservation
+
+
 ## Data
 
 ```json
@@ -101,7 +141,7 @@ Describes the part of the music file that's meant to be played on loop when prev
 }
 ```
 
-The data object maps difficulty names to {ref}`chart objects <chart>`.
+The data object maps difficulty names to [chart objects](#chart).
 
 Keys in this object are not fixed, they can be any string.
 
@@ -111,29 +151,34 @@ When sorting, difficulties may be presented in that order :
 
     BSC ➔ ADV ➔ EXT ➔ (everything else in alphabetical order)
 
-(chart)=
+
 ## Chart
 
 ```json
 {
     "level": 10.3,
     "resolution": 240,
-    "notes" : []
+    "timing": {},
+    "notes": []
 }
 ```
 
 - **level**
-    - number, required
-    - Chart level, can be an integer or a decimal value
+    - number or string, optional
+    - Chart level, can be an integer or a decimal value, or even a string holding a decimal number
 - **resolution**
-    - number, required
+    - integer, optional
     - Greater than 0, always an integer
-    - Number of ticks in a beat, denominator of all beat fractions. Usually 240
+    - Number of ticks in a beat for all the notes in the chart, see [](#symbolic-time)
+- **timing**
+    - [Timing object](#timing), optional
+    - Chart-specific timing information
+    - See [](other-things.md#multiple-timing-objects) for more details on the behavior this should have
 - **notes**
     - array, required
-    - Array of {ref}`tap notes <tap-note>` and {ref}`long notes <long-note>` that make up the chart
+    - Array of [tap notes](#tap-note) and [long notes](#long-note) that make up the chart
 
-(tap-note)=
+
 ## Tap Note
 
 ```json
@@ -144,15 +189,6 @@ When sorting, difficulties may be presented in that order :
 ```
 
 A classic note.
-
-**t** can also be defined this way :
-
-```json
-{
-    "n": 0,
-    "t": [1, 0, 1]
-}
-```
 
 - **n**
     - number, required
@@ -165,28 +201,10 @@ A classic note.
       12 13 14 15
       ```
 - **t**
-    - required
-    - as a number :
-        - Integer greater or equal to 0
-        - Note time in ticks.
+    - [Symbolic Time](#symbolic-time), required
+    - Beat at which the note occurs
 
-          Ticks are fractions of the beat.
-          The resolution defines how many ticks are in a beat for a given chart.
-          In other words if the resolution is 420, a tick lasts for 1/420th oLike for the BPM, sf a beat
-  
-          For more info about measuring time in ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
-    - as an array :
-        - The array MUST have length 3
-        - `t[0]` and `t[1]` are integers greater or equal to 0
-        - `t[2]` is an integer greater than 0
-        - Reprensents the note time in beats as a fraction, the value can be retrieved by the following computation :
-          ```
-          t[0] + (t[1] / t[2])
-          ```
 
-          For instance `[1, 2, 3]` means the note happens 2/3 of a beat after beat 1
-
-(long-note)=
 ## Long Note
 
 ```json
@@ -200,28 +218,13 @@ A classic note.
 
 A classic long note, with a tail
 
-**`l`** can also take the same 3-int tuple form as **`t`**, except it has to represent a non-zero duration :
-
-```json
-{
-    "n": 0,
-    "t": 3600,
-    "l": [0, 1, 10],
-    "p": 5
-}
-```
-
-**n** and **t** are the same as in a {ref}`tap note <tap-note>`
-
+- **n** : same as in a [tap note](#tap-note)
+- **t** : same as in a [tap note](#tap-note)
 - **l**
-    - required
-    - as a number :
-        - Integer greater than 0
-        - Long note duration ("l" as in length ?!), in ticks
-    - as an array:
-        - same constraints as the array-variant of **t**
-        - `t[0]` and `t[1]` cannot both be zero at the same time
-        - Long note duration as a beat fraction
+    - [Symbolic Time](#symbolic-time), required
+    - If a number, strictly positive
+    - If an array, `l[0]` and `l[1]` cannot both be zero at the same time
+    - Long note duration in ticks or beats
 - **p**
     - number, required
     - Integer between 0 and 11 inclusive
@@ -250,3 +253,51 @@ A classic long note, with a tail
       |
       △
       ```
+
+
+## Symbolic Time
+
+Either an integer :
+
+```json
+0
+```
+
+or an array :
+
+```json
+[0, 2, 3]
+```
+
+Represents a time point (or duration) measured in *beats*
+
+
+### As a number
+
+- integer greater or equal to 0
+- Time measured in *ticks* :
+
+  Ticks are fractions of the beat.
+  Using ticks implies a *resolution* is defined somewhere else in the file.
+  The resolution defines how many ticks are in a beat.
+  In other words if the resolution is 240, a tick lasts for 1/240th of a beat.
+  
+  For more info about measuring time in ticks, see [bmson's docs](https://bmson-spec.readthedocs.io/en/master/doc/index.html#terminologies) (their docs refers to ticks as *pulses*).
+
+
+### As an array
+
+- The array **MUST** have length 3
+- The first and second elements are integers greater or equal to 0
+- The third element is an integer greater than 0
+- The array reprensents a time in beats as a [mixed number](https://en.wikipedia.org/wiki/Fraction#Mixed_numbers)
+
+    If `a` is the array in question and we use the bracket notation for array access, the value represented by the array is the following :
+    
+    ```
+    a[0] + (a[1] / a[2])
+    ```
+
+    For instance `[1, 2, 3]` represents 1 + 2/3, `[0, 1, 20]` represents 0 + 1/20.
+
+    As it currently is, the schema allows for improper fractions (0 + 5/1) and non-reduced fractions (0 + 2/4)

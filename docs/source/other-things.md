@@ -1,6 +1,8 @@
-# Validation
+# Other things to look out for
 
-This page explains a few things to look out for when reading/writing memon files.
+[JSON Schema](https://json-schema.org/) is great but by itself, a schema can't describe *everything* that makes a memon file "valid". The json schema file given in the github repository is meant to serve as a *reference* rather than a direct implementation, so some bits are left to be handled by the people adding memon compatibility into their software.
+
+So, here are a few things to look out for or to keep in mind when reading or writing memon files :
 
 ## Notes
 
@@ -25,9 +27,6 @@ All the numbers are within the intervals defined in the schema, however this wou
 
 Notice the tail starting outside the screen.
 
-Parsers should **reject** such notes
-
-
 ### Uniqueness
 
 The schema itself does not prevent the following cases from happening in the array of notes that make up the chart :
@@ -47,9 +46,6 @@ The schema itself does not prevent the following cases from happening in the arr
     { "n": 0, "t": 0, "l": 240, "p": 9 }
 ]
 ```
-
-Parsers should only keep one note for each `(n, t)` couple
-
 
 ### Hitbox Overlap
 
@@ -91,8 +87,6 @@ Here, two long notes overlap on the same square
 
 To clarify, a long note *lasts* for the amount of ticks specified by its `L` key, this means there **cannot** be another note on the same square from `T` to `T+L`, inclusive.
 
-Parsers should **reject** charts with these kinds of overlapping notes.
-
 (marker-animation-overlap)=
 ### Marker Animation Overlap
 
@@ -103,13 +97,62 @@ Since this is mostly an implicit rule that's not strictly followed by official c
 
 ## Decimal values
 
-If possible, non-integer values like `BPM` or `offset` should be manipulated using a [Decimal Data Type](https://en.wikipedia.org/wiki/Decimal_data_type) to preserve their original decimal representation. I think no one likes to see the BPM they defined as a clean `195.3` in the editor be stored as a messy `195.3000030517578125` in the file. If doing this is too hard with your language / library of choice, keep in mind that `1.0.0` allows strings instead :
+If possible, non-integer values like `bpm` or `offset` should be manipulated using a [Decimal Data Type](https://en.wikipedia.org/wiki/Decimal_data_type) to preserve their original decimal representation. I think no one likes to see the BPM they defined as a clean `195.3` in the editor be stored as a messy `195.3000030517578125` in the file. If doing this is too hard with your language / library of choice, keep in mind that `1.0.0` allows strings instead :
 
 - **Valid**
-  ```json
-  { "BPM" : 195.3 }
-  ```
+    
+    ```json
+    { "bpm" : 195.3 }
+    ```
+
 - **Valid since 1.0.0**
-  ```json
-  { "BPM": "195.3" }
-  ```
+  
+    ```json
+    { "bpm": "195.3" }
+    ```
+
+## Multiple timing objects
+
+memon version 1.0.0 introduced [timing objects](schema.md#timing) in two different places in the file, either at the root or in a chart.
+
+All the keys in a timing object are optional, this is to allow for a chart to only redefine what is different from the default timing object.
+
+In other words the timing object at the root acts as a fallback.
+
+In general, when deciding what timing information applies to a given chart, timing objects should be searched in that order *for every key* :
+
+- Chart-specific timing object
+- Root timing object
+- Default values defined by the schema
+
+For instance in the following file :
+
+```json
+{
+    "version": "1.0.0",
+    "timing": {
+        "offset": 0.84
+    },
+    "data": {
+        "BSC": {
+            "timing": {
+                "bpms": [{"beat": 0, "bpm": 200}]
+            },
+            "notes": []
+        },
+        "ADV": {
+            "timing": {
+                "offset": 0.31,
+                "bpms": [{"beat": 0, "bpm": 100}]
+            },
+            "notes": []
+        },
+    }
+}
+```
+
+Neither `BSC` nor `ADV` define `resolution` in their timing info so the implicit default is used instead for both charts.
+
+`BSC` defines no chart-specific `offset` so it uses the value `0.84` from the timing object at the root of the file instead.
+
+`ADV` defines its own `offset` so it gets used instead of all the others

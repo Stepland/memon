@@ -30,7 +30,6 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosectionlabel',
     'sphinx_rtd_theme',
     'myst_parser'
 ]
@@ -69,3 +68,7 @@ html_theme_options = {
     'logo_only': False,
     'collapse_navigation': False,
 }
+
+# Turn on Auto-generated header anchors so myst *actually* checks "doc.md#header" links for validity
+# https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#auto-generated-header-anchors
+myst_heading_anchors = 2
