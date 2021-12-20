@@ -47,7 +47,7 @@
                             "required": ["start", "duration"]
                         },
                         {
-                            "description": "Preview defined as a separate audio file",
+                            "description": "Preview defined as a path to a separate audio file, relative to the memon file",
                             "type": "string"
                         }
                     ]
@@ -72,7 +72,8 @@
                     "resolution": {
                         "description": "Number of ticks in a beat for the notes",
                         "type": "integer",
-                        "minimum": 1
+                        "minimum": 1,
+                        "default": 240
                     },
                     "timing": {
                         "description": "Chart-specific timing to be used instead of the default timing info",
@@ -225,12 +226,14 @@
             "properties": {
                 "offset": {
                     "description": "In seconds, time at which the first beat occurs in the music file",
+                    "default": 0,
                     "$ref": "#/$defs/decimal"
                 },
                 "resolution": {
                     "description": "Number of ticks in a beat for the bpm events",
                     "type": "integer",
-                    "minimum": 1
+                    "minimum": 1,
+                    "default": 240
                 },
                 "bpms": {
                     "description": "Array of BPM events",
@@ -250,7 +253,8 @@
                             }
                         },
                         "required": ["beat", "bpm"]
-                    }
+                    },
+                    "default": [{"beat": 0, "bpm": 120}]
                 }
             }
         }

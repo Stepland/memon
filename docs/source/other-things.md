@@ -4,9 +4,11 @@
 
 So, here are a few things to look out for or to keep in mind when reading or writing memon files :
 
+
 ## Notes
 
 The note schema is fairly minimal. It does its best to eliminate most invalid notes by restricting the possible values of each key. However it still allows for the following false positives (notes that are conscidered valid by the schema but shouldn't) :
+
 
 ### Off-Screen Tails
 
@@ -27,6 +29,7 @@ All the numbers are within the intervals defined in the schema, however this wou
 
 Notice the tail starting outside the screen.
 
+
 ### Uniqueness
 
 The schema itself does not prevent the following cases from happening in the array of notes that make up the chart :
@@ -46,6 +49,7 @@ The schema itself does not prevent the following cases from happening in the arr
     { "n": 0, "t": 0, "l": 240, "p": 9 }
 ]
 ```
+
 
 ### Hitbox Overlap
 
@@ -111,7 +115,8 @@ If possible, non-integer values like `bpm` or `offset` should be manipulated usi
     { "bpm": "195.3" }
     ```
 
-## Multiple timing objects
+
+## Multiple Timing Objects
 
 memon version 1.0.0 introduced [timing objects](schema.md#timing) in two different places in the file, either at the root or in a chart.
 
@@ -151,8 +156,8 @@ For instance in the following file :
 }
 ```
 
-Neither `BSC` nor `ADV` define `resolution` in their timing info so the implicit default is used instead for both charts.
+Neither charts nor the root timing object define `resolution`, so the default value (`240` as specified in the schema) is used instead.
 
-`BSC` defines no chart-specific `offset` so it uses the value `0.84` from the timing object at the root of the file instead.
+The timing object in `BSC` does not define `offset` so it uses the value `0.84` from the timing object at the root of the file instead.
 
 `ADV` defines its own `offset` so it gets used instead of all the others

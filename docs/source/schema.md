@@ -87,8 +87,8 @@ Describes the part of the music file that's meant to be played on loop when prev
 
 ```json
 {
-    "offset": 0.0,
-    "resolution": 1,
+    "offset": 0,
+    "resolution": 240,
     "bpms": []
 }
 ```
@@ -97,17 +97,26 @@ Describes the relationship between seconds in the audio file and symbolic time (
 
 - **offset**
     - number or string, optional
+    - If the key is missing, defaults to 0
     - In seconds, time at which the first beat occurs in the music file.
-    
-        For instance, if the first beat occurs at 0.15 seconds in the audio file, the offset should be the number literal `0.15`, or the string `"0.15"` if the tools used can't keep a clean decimal representation when using json number literals.
+      
+      For instance, if the first beat occurs at 0.15 seconds in the audio file, the offset should be the number literal `0.15`, or the string `"0.15"` if the tools used can't keep a clean decimal representation when using json number literals.
 - **resolution**
     - integer, optional
     - Greater than 0, always an integer
+    - If the key is missing, defaults to 240
     - Number of ticks in a beat for the bpm events defined in this timing object, if some bpm events define a beat using a single integer, this is the implicit fraction denominator to use to convert the integer number of ticks to a fractional number of beats.
 - **bpms**
     - array, optional
+    - If the key is missing, defaults to
+
+        ```json
+        [{"beat": 0, "bpm": 120}]
+        ```
+
     - Array of [BPM events](#bpm)
 
+Timing objects can appear in multiple places in a memon file. The section [](other-things.md#multiple-timing-objects) explains how to deal with them.
 
 ## BPM
 
@@ -169,6 +178,7 @@ When sorting, difficulties may be presented in that order :
 - **resolution**
     - integer, optional
     - Greater than 0, always an integer
+    - If the key is missing, defaults to 240
     - Number of ticks in a beat for all the notes in the chart, see [](#symbolic-time)
 - **timing**
     - [Timing object](#timing), optional
@@ -257,19 +267,9 @@ A classic long note, with a tail
 
 ## Symbolic Time
 
-Either an integer :
+Either an integer like `0` or an array like `[0, 2, 3]`.
 
-```json
-0
-```
-
-or an array :
-
-```json
-[0, 2, 3]
-```
-
-Represents a time point (or duration) measured in *beats*
+Represents a time point (or a duration) measured in *beats*
 
 
 ### As a number
