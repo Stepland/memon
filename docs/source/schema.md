@@ -89,7 +89,8 @@ Describes the part of the music file that's meant to be played on loop when prev
 {
     "offset": 0,
     "resolution": 240,
-    "bpms": []
+    "bpms": [],
+    "hakus": []
 }
 ```
 
@@ -115,6 +116,10 @@ Describes the relationship between seconds in the audio file and symbolic time (
         ```
 
     - Array of [BPM events](#bpm)
+- **hakus**
+    - array, optional
+    - If the key is missing, default to the regular background bounce pattern
+    - HAKUs (named after the `HAKU` command in .eve files) describe how the background animation should bounce along with the music, most songs just leave a default regular patterns that makes the background bounce on every beat, but some songs use these commands as a gimmick. In that sense they are similar to beat lines in BMS
 
 Timing objects can appear in multiple places in a memon file. The section [](other-things.md#multiple-timing-objects) explains how to deal with them.
 
@@ -240,7 +245,7 @@ A classic long note, with a tail
     - Integer between 0 and 5 inclusive
     - Tail starting position in 6-notation :
 
-      For every given button on the controler, there are 6 possible starting
+      For every given button on the controller, there are 6 possible starting
       positions for long note tails.
 
       For example if the long note is held here :

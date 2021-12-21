@@ -114,6 +114,11 @@ For example, in this case :
 
 The BPM on beat zero is set to 124
 
+### Duplicate HAKUs
+
+The schema allows of duplicate hakus, implementations should deduplicate hakus by beat.
+
+
 (multiple-timing-objects)=
 ### Multiple Timing Objects
 
