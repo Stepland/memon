@@ -11,5 +11,5 @@ memon
 
 .. toctree::
     schema
-    validation
+    other-things
     changelog

@@ -1,7 +1,8 @@
 {
     "version": "1.0.0",
     "metadata": {
-        "preview": "blablabla"
+        "BPM": 1,
+        "offset": 0
     },
     "data": {}
 }

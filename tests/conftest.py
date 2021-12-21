@@ -32,10 +32,10 @@ class ExamplesFolder(pytest.Collector):
 class ExampleSubfolder(pytest.Collector):
     def collect(self):
         path = Path(self.fspath)
-        for file in (path / "pass").glob("*.json"):
+        for file in sorted((path / "pass").glob("*.json")):
             yield ValidExample.from_parent(self, name=file.stem, path=file)
         
-        for file in (path / "fail").glob("*.json"):
+        for file in sorted((path / "fail").glob("*.json")):
             yield InvalidExample.from_parent(self, name=file.stem, path=file)
 
 

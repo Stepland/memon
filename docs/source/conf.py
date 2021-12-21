@@ -30,7 +30,6 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autosectionlabel',
     'sphinx_rtd_theme',
     'myst_parser'
 ]
@@ -59,9 +58,17 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_logo = '_static/memon-logo-white.svg'
+html_logo = '_static/memon-logo.svg'
+
+html_css_files = [
+    'css/custom.css',
+]
 
 html_theme_options = {
     'logo_only': False,
     'collapse_navigation': False,
 }
+
+# Turn on Auto-generated header anchors so myst *actually* checks "doc.md#header" links for validity
+# https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#auto-generated-header-anchors
+myst_heading_anchors = 2

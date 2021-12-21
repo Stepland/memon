@@ -1,0 +1,34 @@
+{
+    "version": "1.0.0",
+    "timing": {
+        "offset": 0,
+        "resolution": 1,
+        "bpms": [{"beat": 0, "bpm": 1}]
+    },
+    "data": {
+        "BSC": {
+            "timing": {
+                "offset": 0,
+                "resolution": 1,
+                "bpms": [{"beat": 0, "bpm": 1}]
+            },
+            "notes": []
+        },
+        "ADV": {
+            "timing": {
+                "offset": 0,
+                "resolution": 1,
+                "bpms": [{"beat": 0, "bpm": 1}]
+            },
+            "notes": []
+        },
+        "EXT": {
+            "timing": {
+                "offset": 0,
+                "resolution": 1,
+                "bpms": [{"beat": 0, "bpm": 1}]
+            },
+            "notes": []
+        }
+    }
+}
