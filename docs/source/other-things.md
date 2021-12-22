@@ -116,7 +116,7 @@ The BPM on beat zero is set to 124
 
 ### Duplicate HAKUs
 
-The schema allows of duplicate hakus, implementations should deduplicate hakus by beat.
+The schema allows for duplicate hakus, implementations should only keep at most one haku per beat
 
 
 (multiple-timing-objects)=
