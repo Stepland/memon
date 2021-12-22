@@ -201,7 +201,8 @@
         "positiveDecimal": {
             "description": "a positive decimal number as either a number literal or a string",
             "oneOf": [{
-                "type": "number"
+                "type": "number",
+                "minimum": 0
             },
             {
                 "type": "string",
