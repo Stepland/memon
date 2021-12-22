@@ -1,6 +1,12 @@
 # Changelog
 
-## v1.0.0
+## v1.0.0-rc.2
+- **Changed**
+    - In the chart object, `level` can now be negative, it was mistakenly restricted to being positive in `v1.0.0-rc.1` as a part of turning it into a decimal value
+- **Schema bugs**
+    - `#/$defs/positiveDecimal` allowed for negative number literals, not anymore
+
+## v1.0.0-rc.1
 - **Added**
     - Symbolic times such as `t` and `l` in notes can also now be expressed as a tuple of 3 ints representing a mixed number
     - Decimal numbers such as the offset or the bpm can now also be stored as strings to make it easier to preserve clean decimal notations
