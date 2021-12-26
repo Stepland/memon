@@ -33,7 +33,7 @@ The schema itself does not prevent the following cases from happening in the arr
 
 ### Hitbox Overlap
 
-*(This describes **hitbox** overlap, for marker animation overlap see {ref}`marker-animation-overlap`)*
+*(This describes **hitbox** overlap, for marker animation overlap see [](#marker-animation-overlap))*
 
 This set of notes has another problem, but at first glance it's unclear why :
 
@@ -71,7 +71,6 @@ Here, two long notes overlap on the same square
 
 To clarify, a long note *lasts* for the amount of ticks specified by its `L` key, this means there **cannot** be another note on the same square from `T` to `T+L`, inclusive.
 
-(marker-animation-overlap)=
 ### Marker Animation Overlap
 
 Due to the duration of a marker animation, two notes whose hitboxes don't overlap can however happen too close to one another to allow both marker animations to appear separately. Most official jubeat charts avoid this (with some notable exceptions like [Polaris ADV](https://remywiki.com/Polaris#Trivia)).
@@ -119,7 +118,6 @@ The BPM on beat zero is set to 124
 The schema allows for duplicate hakus, implementations should only keep at most one haku per beat
 
 
-(multiple-timing-objects)=
 ### Multiple Timing Objects
 
 memon version 1.0.0 introduced [timing objects](schema.md#timing) in two different places in the file, either at the root or in a chart.

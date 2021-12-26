@@ -71,4 +71,4 @@ html_theme_options = {
 
 # Turn on Auto-generated header anchors so myst *actually* checks "doc.md#header" links for validity
 # https://myst-parser.readthedocs.io/en/latest/syntax/optional.html#auto-generated-header-anchors
-myst_heading_anchors = 2
+myst_heading_anchors = 3
