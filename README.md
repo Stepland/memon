@@ -1,23 +1,31 @@
-# `.memon`
+![memon logo](logo/memon-logo_packed__broken_line.svg)
+
 *memo + json*
 
 [![Docs](https://readthedocs.org/projects/memon-spec/badge/?version=latest&style=flat)](https://memon-spec.readthedocs.io/en/latest)
 
 `.memon` is a new json-based jubeat chart set format designed to be easier to parse than existing "memo-like" formats (memo, youbeat, etc ...). The goal of this format is to allow for easier and faster creation of tools and simulators.
 
-This repo provides a description of the format using draft 2020-12 JSONSchema
+This repo provides [a description of the format](schema.json) using [draft 2020-12 JSONSchema](https://json-schema.org/)
+
+Documentation is available [here](https://memon-spec.readthedocs.io/en/latest).
+
+The documentation goes over the format in a more human-friendly way and gives some more information for those willing to create programs that read or write memon files
 
 ## Features
-- Metadata *(soon to be extended for use in games)*
+- Multiple charts per file
+- Long notes
+- BPM Changes
+- Per-chart and Per-file timing
+- Hakus (Beats Markers)
+- Metadata
     - song title
     - artist
     - music file path
     - album cover path
-    - **single BPM and offset** *(ETA for multiple timing points support is 1.0.0)*
-- Multiple charts per file
-- Long notes
 
-## Implementations
-- A reference parser is available [here](https://github.com/Stepland/memoncpp)
-- [F.E.I.S](https://github.com/Stepland/F.E.I.S.) is a GUI jubeat chart editor that supports .memon files
-- [jujube](https://github.com/Stepland/jujube) is a jubeat simulator that supports .memon files
+## Projects that use memon
+- [jujube](https://github.com/Stepland/jujube), a jubeat simulator
+- [F.E.I.S](https://github.com/Stepland/F.E.I.S.), a GUI jubeat chart editor
+- [jubeatools](https://github.com/Stepland/jubeatools), a CLI tool to convert between many different jubeat chart formats
+- [memoncpp](https://github.com/Stepland/memoncpp), a C++ parser
