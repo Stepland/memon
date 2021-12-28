@@ -1,12 +1,18 @@
 # Changelog
 
-## v1.0.0-rc.2
-- **Changed**
-    - In the chart object, `level` can now be negative, it was mistakenly restricted to being positive in `v1.0.0-rc.1` as a part of turning it into a decimal value
-- **Schema bugs**
-    - `#/$defs/positiveDecimal` allowed for negative number literals, not anymore
+## v1.0.0
 
-## v1.0.0-rc.1
+*(Merged with the changes from v1.0.0-rc.1 to be less confusing)*
+
+### Overview
+- BPM changes
+- Per-chart + per-file timing
+- `resolution` is made mostly obsolete by two things :
+    - It's implicitly 240 if the key is missing
+    - Beat fractions not covered by the resolution can be written using the new 3-int tuple mixed number form
+- HAKUs (Beat markers)
+
+### Details
 - **Added**
     - Symbolic times such as `t` and `l` in notes can also now be expressed as a tuple of 3 ints representing a mixed number
     - Decimal numbers such as the offset or the bpm can now also be stored as strings to make it easier to preserve clean decimal notations
@@ -27,6 +33,7 @@
     - In the chart object :
         - `level` can now also be a decimal number, either as a number literal or as a string
         - `level` is now optional
+        - `level` can now be negative, it was mistakenly restricted to being positive in `v1.0.0-rc.1` as a part of turning it into a decimal value
         - `resolution` is now optional
         - `resolution` now has an implicit default value of 240 in case the key is missing from the chart object
     - Timing information is now stored in dedicated timing objects, one at the root of the memon file to act as a fallback, and one for each chart for per-chart timing info
@@ -40,6 +47,9 @@
         - `preview path` is now replaced with the polymorphic `preview`
         - `offset` is now replaced by the offset in timing objects
         - `BPM` is now replaced by the bpms in timing objects
+- **Schema bugs**
+    - `#/$defs/positiveDecimal` allowed for negative number literals, not anymore
+
 
 ## v0.3.0
 - **Added**
