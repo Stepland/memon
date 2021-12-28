@@ -1,19 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "memon",
     "description": "A jubeat chart set description format based on json",
     "type": "object",
     "properties": {
         "version": {
             "description": "The version string for the schema format",
-            "type": "string",
-            "enum": ["0.3.0"]
+            "const": "1.0.0"
         },
         "metadata": {
             "description": "Contains information that applies to the whole set of charts",
             "type": "object",
+            "additionalProperties": false,
             "properties": {
-                "song title": {
+                "title": {
                     "description": "The title of the song",
                     "type": "string"
                 },
@@ -21,62 +21,63 @@
                     "description": "The song artist",
                     "type": "string"
                 },
-                "music path": {
+                "audio": {
                     "description": "Path to the music file, relative to the memon file",
                     "type": "string"
                 },
-                "album cover path": {
+                "jacket": {
                     "description": "Path to the album cover, relative to the memon file",
                     "type": "string"
                 },
-                "BPM": {
-                    "description": "Song tempo in Beats per Minute",
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                },
-                "offset": {
-                    "description": "In seconds, opposite of the time position of the first beat in the music file",
-                    "type": "number"
-                },
                 "preview": {
                     "description": "Describes the part of the music file that's to be played on loop when previewing this song",
-                    "type": "object",
-                    "properties": {
-                        "position": {
-                            "description": "In seconds, Time at which preview should start",
-                            "type": "number",
-                            "minimum": 0
+                    "oneOf": [{
+                            "description": "Preview defined as a sample from the music file",
+                            "type": "object",
+                            "properties": {
+                                "start": {
+                                    "description": "In seconds, Time at which preview should start",
+                                    "$ref": "#/$defs/positiveDecimal"
+                                },
+                                "duration": {
+                                    "description": "In seconds, for how long should the preview be played past the starting point",
+                                    "$ref": "#/$defs/strictlyPositiveDecimal"
+                                }
+                            },
+                            "required": ["start", "duration"]
                         },
-                        "length": {
-                            "description": "In seconds, for how long should the preview be played past the starting point",
-                            "type": "number",
-                            "minimum": 0
+                        {
+                            "description": "Preview defined as a path to a separate audio file, relative to the memon file",
+                            "type": "string"
                         }
-                    },
-                    "required": ["position", "length"]
-                },
-                "preview path": {
-                    "description": "Path to the music preview, relative to the memon file",
-                    "type": "string"
+                    ]
                 }
-            },
-            "required": ["song title","artist","BPM","offset"]
+            }
+        },
+        "timing": {
+            "description": "default timing, applies by default to every chart in the file",
+            "$ref": "#/$defs/timingObject"
         },
         "data": {
-            "description": "Charts with difficulty names used as keys",
+            "description": "Mapping that associates difficulty names to charts",
             "type": "object",
             "additionalProperties": {
                 "description": "A chart",
                 "type": "object",
                 "properties": {
                     "level": {
-                        "description": "Level rating of the chart, typically goes from 0 to 10 in jubeat",
-                        "type": "integer"
+                        "description": "Level rating of the chart, typically goes from 1 to 10.9 in jubeat",
+                        "$ref": "#/$defs/decimal"
                     },
                     "resolution": {
-                        "description": "Tempo resolution, number of \"ticks\" in a beat",
+                        "description": "Number of ticks in a beat for the notes",
                         "type": "integer",
-                        "exclusiveMinimum": 0
+                        "minimum": 1,
+                        "default": 240
+                    },
+                    "timing": {
+                        "description": "Chart-specific timing to be used instead of the default timing info",
+                        "$ref": "#/$defs/timingObject"
                     },
                     "notes": {
                         "description": "The array of notes",
@@ -92,29 +93,178 @@
                                     "maximum": 15
                                 },
                                 "t": {
-                                    "description": "Timing, measured in \"ticks\" as specified with the resolution",
-                                    "type":"integer",
-                                    "minimum": 0
+                                    "description": "Note time, either in ticks or as a standalone fraction",
+                                    "$ref": "#/$defs/timeInBeats"
                                 },
                                 "l": {
-                                    "description": "Lenght in ticks, 0 if not a long note",
-                                    "type": "integer",
-                                    "minimum": 0
+                                    "description": "Long note duration, either in ticks or as a standalone fraction",
+                                    "$ref": "#/$defs/nonZeroTimeInBeats"
                                 },
                                 "p": {
-                                    "description": "Tail starting position, relative to note position, counting from 0 to 11 clockwise and expanding out starting one square above the note",
+                                    "description": "Tail starting position, in 6-notation : 0, 1 and 2 are for the possible horizontal tails from left to right, 3, 4 and 5 are for the possible vertical tails from top to bottom",
                                     "type": "integer",
                                     "minimum": 0,
-                                    "maximum": 11
+                                    "maximum": 5
                                 }
                             },
-                            "required": ["n","t","l","p"]
+                            "required": ["n", "t"],
+                            "dependentRequired": {
+                                "l": ["p"],
+                                "p": ["l"]
+                            },
+                            "additionalProperties": false
                         }
                     }
                 },
-                "required": ["level","resolution","notes"]
+                "required": ["notes"]
             }
         }
     },
-    "required": ["version","metadata","data"]
+    "required": ["version", "data"],
+    "$defs": {
+        "timeInBeats": {
+            "description": "Time measured as a fraction of beats, either in ticks or as a standalone fraction",
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                {
+                    "$ref": "#/$defs/positiveTimeFraction"
+                }
+            ]
+        },
+        "nonZeroTimeInBeats": {
+            "description": "Strictly positive time measured as a fraction of beats, either in ticks or as a standalone fraction",
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                {
+                    "$ref": "#/$defs/strictlyPositiveTimeFraction"
+                }
+            ]
+        },
+        "positiveTimeFraction": {
+            "description": "Time in beats represented as a fraction",
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "prefixItems": [{
+                    "description": "Integral part",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                {
+                    "description": "Numerator",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                {
+                    "description": "Denominator",
+                    "type": "integer",
+                    "minimum": 1
+                }
+            ]
+        },
+        "strictlyPositiveTimeFraction": {
+            "description": "Non-zero time in beats represented as a fraction",
+            "allOf": [{
+                    "$ref": "#/$defs/positiveTimeFraction"
+                },
+                {
+                    "not": {
+                        "prefixItems": [{
+                                "const": 0
+                            },
+                            {
+                                "const": 0
+                            },
+                            true
+                        ]
+                    }
+                }
+            ]
+        },
+        "decimal": {
+            "description": "a decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number"
+            },
+            {
+                "type": "string",
+                "pattern": "^-?\\d+(\\.\\d+)?$"
+            }
+            ]
+        },
+        "positiveDecimal": {
+            "description": "a positive decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number",
+                "minimum": 0
+            },
+            {
+                "type": "string",
+                "pattern": "^\\d+(\\.\\d+)?$"
+            }
+            ]
+        },
+        "strictlyPositiveDecimal": {
+            "description": "a strictly positive decimal number as either a number literal or a string",
+            "oneOf": [{
+                "type": "number",
+                "minimum": 1
+            },
+            {
+                "type": "string",
+                "pattern": "^(0\\.\\d*[1-9]\\d*|\\d*[1-9]\\d*(\\.\\d+)?)$"
+            }
+            ]
+        },
+        "timingObject": {
+            "type": "object",
+            "properties": {
+                "offset": {
+                    "description": "In seconds, time at which the first beat occurs in the music file",
+                    "default": 0,
+                    "$ref": "#/$defs/decimal"
+                },
+                "resolution": {
+                    "description": "Number of ticks in a beat for the bpms and the hakus",
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 240
+                },
+                "bpms": {
+                    "description": "Array of BPM events",
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "description": "A single BPM event",
+                        "type": "object",
+                        "properties": {
+                            "beat": {
+                                "description": "Time at which the bpm changes",
+                                "$ref": "#/$defs/timeInBeats"
+                            },
+                            "bpm": {
+                                "description": "Tempo measured in Beats Per Minute",
+                                "$ref": "#/$defs/strictlyPositiveDecimal"
+                            }
+                        },
+                        "required": ["beat", "bpm"]
+                    },
+                    "default": [{"beat": 0, "bpm": 120}]
+                },
+                "hakus": {
+                    "description": "Array of HAKUs, dictates how the background should bounce if the bouncing pattern differs from the usual 4/4",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/timeInBeats"
+                    }
+                }
+            }
+        }
+    }
 }

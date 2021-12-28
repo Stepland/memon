@@ -1,0 +1,13 @@
+{
+    "version": "1.0.0",
+    "data": {
+        "BSC": {
+            "level": 0,
+            "resolution": 1,
+            "notes": [{
+                "n": 0,
+                "t": 0
+            }]
+        }
+    }
+}

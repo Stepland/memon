@@ -1,0 +1,24 @@
+name: Integrity checks
+
+on:
+  push:
+    branches:
+    - master
+    - release-v*
+  pull_request:
+    branches: 
+    - master
+    - release-v*
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: cd
+        run: cd $GITHUB_WORKSPACE
+      - name: pip install
+        run: pip install -r tests/requirements.txt
+      - name: pytest
+        run: pytest

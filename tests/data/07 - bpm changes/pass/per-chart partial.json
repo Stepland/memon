@@ -1,0 +1,29 @@
+{
+    "version": "1.0.0",
+    "timing": {
+        "offset": 0,
+        "resolution": 1,
+        "bpms": [{"beat": 0, "bpm": 1}]
+    },
+    "data": {
+        "BSC": {
+            "timing": {
+                "bpms": [{"beat": 0, "bpm": 1}]
+            },
+            "notes": []
+        },
+        "ADV": {
+            "timing": {
+                "bpms": [{"beat": 0, "bpm": 2}]
+            },
+            "notes": []
+        },
+        "EXT": {
+            "timing": {
+                "resolution": 2,
+                "bpms": [{"beat": 0, "bpm": 3}]
+            },
+            "notes": []
+        }
+    }
+}
